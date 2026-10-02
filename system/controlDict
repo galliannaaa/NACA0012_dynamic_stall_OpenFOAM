@@ -1,0 +1,94 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  11
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+
+application     pimpleFoam;
+
+libs
+(
+    "libfvMotionSolvers.so"
+);
+
+
+startFrom       startTime;
+startTime       0;
+
+stopAt          endTime;
+endTime         3.77;
+
+
+deltaT          2e-5;
+adjustTimeStep  no;
+maxCo           0.2;
+maxDeltaT       2e-5;
+
+
+writeControl    runTime;
+writeInterval   0.01;
+
+purgeWrite      0;
+writeFormat     ascii;
+writePrecision  10;
+writeCompression off;
+
+timeFormat      general;
+timePrecision   10;
+
+runTimeModifiable true;
+
+functions
+{
+    forceCoeffs
+    {
+        type            forceCoeffs;
+
+        libs
+        (
+            "libforces.so"
+        );
+
+        patches         (wing);
+
+        rho             rhoInf;
+        rhoInf          1.225;
+
+       
+        CofR            (0.25 0 0);
+
+        
+        dragDir         (0.9659258 0.2588190 0);
+        liftDir         (-0.2588190 0.9659258 0);
+        pitchAxis       (0 0 -1);
+
+        magUInf         25;
+        lRef            1;
+        Aref            0.3;
+
+        writeControl    runTime;
+        writeInterval   0.001;
+    }
+
+    yPlus
+    {
+        type            yPlus;
+
+        libs
+        (
+            "libfieldFunctionObjects.so"
+        );
+
+        writeControl    runTime;
+        writeInterval   0.005;
+    }
+}

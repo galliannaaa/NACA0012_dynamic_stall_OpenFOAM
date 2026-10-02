@@ -1,0 +1,31 @@
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       IOobject;
+    object      initialConditions;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// simulation controls
+np                  4; 
+iterations          2;         
+writeEvery          0.01;      
+
+// airfoil properties
+alpha               0; 
+chord               1; 
+CR                  (0 0 0);   
+pitch               (0 0 1);   
+
+// fluid properties
+mach                0.05;
+Rair                287.05; 
+gamma               1.4;
+Tref                298; 
+muVal               1.82e-05; 
+rhoVal              1.17; 
+
+// turbulence properties
+turbModel           kOmegaSST;
+hWall               0.01106;
